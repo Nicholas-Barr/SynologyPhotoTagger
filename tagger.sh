@@ -8,7 +8,6 @@ usage()
     echo "usage: tagger [[[-f file ] [-r include rating tag] [-l include location tag] [-w write to file (otherwise just report tags found)] [-o overwrite (don't make backup copy of photo)]  [-v verbose]] | [-h]]"
 }
 
-
 ##### Main
 
 ratingFound=
@@ -103,7 +102,6 @@ then
 	fi
 fi
 
-
 if [ "$getRating" = "1" ]
 then
 	imageRating=$(psql -X -A -U postgres -d photo -t -c "SELECT rating FROM photo_image WHERE path='${filename//\'/\'\'}';")
@@ -161,7 +159,7 @@ then
 		printf 'Write is set, writing info to image with call to ExifTool:\n'
 		echo ${exifToolCommand[@]}
 
-		"${exifToolCommand[@]}" 2>> error.txt
+		"${exifToolCommand[@]}"
 
 		#(( verbose == 1 )) && echo "Checking updated image data..."
 		#(( verbose == 1 )) && $exiftool -s "$filename"

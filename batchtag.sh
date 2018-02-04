@@ -32,8 +32,6 @@ while [ "$1" != "" ]; do
     shift
 done
 
-#echo $directory
-	
 args=()
 (( getRating == 1 )) && args+=( '-r' )
 (( getLocation == 1 )) && args+=( '-l' )
@@ -43,13 +41,8 @@ args=()
 
 taggerCommand=("$tagger" "${args[@]}" '-f' )
 
-#echo ${taggerCommand[@]}
-
-
-
 echo $seperator
 printf 'Running batchtag.sh script, start time: %(%d/%m/%Y  %I:%M:%S %P)T\n'
 echo $seperator
-
 
 time find "$directory" -iname "*.jpg" -not -path "*eaDir*" -not -path "*#recycle*" -exec ${taggerCommand[@]} "{}" \;
