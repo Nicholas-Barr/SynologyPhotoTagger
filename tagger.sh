@@ -8,6 +8,8 @@ usage()
     echo "usage: tagger [[[-f file ] [-r include rating tag] [-l include location tag] [-w write to file (otherwise just report tags found)] [-o overwrite (don't make backup copy of photo)]  [-v verbose]] | [-h]]"
 }
 
+
+
 ##### Main
 
 ratingFound=
@@ -15,7 +17,8 @@ locationFound=
 verbose=
 overwriteOriginal=
 filename=~/sysinfo_page.html
-exiftool="${BASH_SOURCE%/*}/Image-ExifTool-10.77/exiftool"
+exiftoolPath="${BASH_SOURCE%/*}/Image-ExifTool-10.77/"
+exiftool="$exifToolPath/exiftool"
 logfile="${BASH_SOURCE%/*}/tagger-log-$(date).txt"
 
 while [ "$1" != "" ]; do
@@ -42,10 +45,25 @@ while [ "$1" != "" ]; do
     shift
 done
 
+
 seperator='----------------------------------------------------------------------'
 echo $seperator
 printf "Running tagger.sh script, start time $(date)\n"
 echo $seperator
+
+##### Check if exiftool is installed
+if [ ! -d "$exiftoolPath" ]; then
+	echo "Exiftool not found, downloading now"
+	wget -O- https://www.sno.phy.queensu.ca/~phil/exiftool/Image-ExifTool-10.77.tar.gz | tar xz #&> /dev/null
+	if [ "$?" == "0" ]; then
+		echo "Exiftool successfully downloaded"
+	else
+		echo "Exiftool not downloaded, please download manually and retry."
+		exit 1
+	fi
+fi
+
+
 printf "Verifying image '$filename' exists...\n"
 if [ -e "$filename" ]
 then
