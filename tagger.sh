@@ -18,7 +18,7 @@ verbose=
 overwriteOriginal=
 filename=~/sysinfo_page.html
 exiftoolPath="${BASH_SOURCE%/*}/Image-ExifTool-10.77/"
-exiftool="$exifToolPath/exiftool"
+exiftool="$exiftoolPath/exiftool"
 logfile="${BASH_SOURCE%/*}/tagger-log-$(date).txt"
 
 while [ "$1" != "" ]; do
