@@ -170,6 +170,8 @@ then
 		fi
 
 		args+=( '-F' ) #fix minor errors in metadata (otherwise we don't write if we detect problems)
+		args+=( '-P' ) #Keep the original file modification date
+
 
 		(( overwriteOriginal == 1 )) && args+=( '-overwrite_original' )
 
